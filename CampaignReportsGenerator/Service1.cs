@@ -12,6 +12,8 @@ namespace CampaignReportsGenerator
 {
     public partial class Service1 : ServiceBase
     {
+        ApplicationController appController = null;
+        System.Threading.Thread appControllerThread = null;
         public Service1()
         {
             InitializeComponent();
@@ -19,10 +21,17 @@ namespace CampaignReportsGenerator
 
         protected override void OnStart(string[] args)
         {
+            appController = new ApplicationController();
+            appControllerThread = new System.Threading.Thread(new System.Threading.ThreadStart(appController.Start));
+            appControllerThread.Name = "ApplicationControllerThread";
+            appControllerThread.Start();
+ 
         }
 
         protected override void OnStop()
         {
+            appController.Stop();
+            appControllerThread.Abort();
         }
     }
 }

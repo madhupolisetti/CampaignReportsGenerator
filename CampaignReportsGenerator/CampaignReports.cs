@@ -11,6 +11,7 @@ namespace CampaignReportsGenerator
         private long _campaignScheduleId = 0;
         private long _requestId = 0;
         private SourceDatabase _sourceDataBase = SourceDatabase.PRODUCTION;
+        private CampaignType _campaignType = CampaignType.SMS;
 
         public long CampaignScheduleId
         {
@@ -30,6 +31,12 @@ namespace CampaignReportsGenerator
             get { return _sourceDataBase; }
             set { _sourceDataBase = value;}
 
+        }
+
+        public CampaignType CType
+        {
+            get { return this._campaignType; }
+            set { _campaignType = value; }
         }
 
     }

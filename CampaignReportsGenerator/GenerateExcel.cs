@@ -21,10 +21,14 @@ namespace CampaignReportsGenerator
         
         public void GenerateReports(CampaignReports campaignReportsObj)
         {
+
             try
             {
                 sqlCon = new SqlConnection(SharedClass.GetConnectionString(campaignReportsObj.SourceDataBase));
-                sqlCmd = new SqlCommand("Get_CampaignReports", sqlCon);
+                if(campaignReportsObj.CType == CampaignType.SMS)
+                    sqlCmd = new SqlCommand("Get_CampaignReports", sqlCon);
+                else
+                    sqlCmd = new SqlCommand("Get_VoiceCampaignReports", sqlCon);
                 sqlCmd.CommandType = CommandType.StoredProcedure;
                 sqlCmd.Parameters.Add("@CampaignScheduleId", SqlDbType.BigInt).Value = campaignReportsObj.CampaignScheduleId;
                 sqlCmd.Parameters.Add("@FileName", SqlDbType.VarChar, 100).Direction = ParameterDirection.Output;
@@ -83,6 +87,7 @@ namespace CampaignReportsGenerator
 
             }
         }
+
         
         public bool GenerateExcelReports(DataTable reportsTable, string fileName, SourceDatabase sourceDataBase)
         {

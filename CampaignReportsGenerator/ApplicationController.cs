@@ -71,6 +71,11 @@ namespace CampaignReportsGenerator
                             {
                                 CampaignReports _campaignReportsObj = new CampaignReports();
                                 _campaignReportsObj.RequestId = Convert.ToInt64(dr["Id"].ToString());
+                                if (dr["CampaignType"] != null && Convert.ToString(dr["CampaignType"]).Equals("VOICE",StringComparison.CurrentCultureIgnoreCase))
+                                    _campaignReportsObj.CType = CampaignType.VOICE;
+                                else
+                                    _campaignReportsObj.CType = CampaignType.SMS;
+
                                 if (!dr["CampaignScheduleId"].Equals(System.DBNull.Value))
                                     _campaignReportsObj.CampaignScheduleId = Convert.ToInt64(dr["CampaignScheduleId"].ToString());
                                 else
